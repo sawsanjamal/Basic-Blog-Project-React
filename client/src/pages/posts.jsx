@@ -7,7 +7,14 @@ function Posts() {
   return (
     <>
       <div className="container">
-        <h1 className="page-title">Posts</h1>
+        <h1 className="page-title">
+          Posts
+          <div className="title-btns">
+            <Link className="btn btn-outline" to="/posts/new">
+              New
+            </Link>
+          </div>
+        </h1>
         <div className="card-grid">
           {posts.map((post) => {
             return (
