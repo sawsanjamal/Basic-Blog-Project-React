@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { useLoaderData, Link, Form, useResolvedPath } from "react-router-dom";
+import { useLoaderData, Link, Form } from "react-router-dom";
 
 import { getPosts } from "../api/posts";
 import { getUsers } from "../api/users";
