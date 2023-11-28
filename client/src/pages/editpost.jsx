@@ -1,14 +1,15 @@
-import { redirect, useLoaderData } from "react-router-dom";
+import { redirect, useLoaderData, useActionData } from "react-router-dom";
 import { getPost, updatePost } from "../api/posts";
 import { getUsers } from "../api/users";
-import { PostForm } from "../components/PostForm";
+import { PostForm, postFormValidator } from "../components/PostForm";
 
 function EditPost() {
   const { users, post } = useLoaderData();
+  const errors = useActionData();
   return (
     <>
       <h1 className="page-title">Edit Post</h1>
-      <PostForm users={users} defaultValues={post} />
+      <PostForm users={users} defaultValues={post} errors={errors} />
     </>
   );
 }
@@ -24,6 +25,11 @@ async function action({ request, params: { postId } }) {
   const title = formData.get("title");
   const body = formData.get("body");
   const userId = formData.get("userId");
+  const errors = postFormValidator({ title, userId, body });
+
+  if (Object.keys(errors).length > 0) {
+    return errors;
+  }
 
   const post = await updatePost(
     postId,

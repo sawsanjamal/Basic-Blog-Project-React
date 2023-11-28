@@ -1,10 +1,17 @@
-import { Form, Link } from "react-router-dom";
+import { Form, Link, useNavigation } from "react-router-dom";
 import { FormGroup } from "./FormGroup";
-export function PostForm({ users, defaultValues = {} }) {
+export function PostForm({
+  users,
+  isSubmitting,
+  errors = {},
+  defaultValues = {},
+}) {
+  const { state } = useNavigation();
+  isSubmitting = state === "submitting";
   return (
     <Form method="post" className="form">
       <div className="form-row">
-        <FormGroup>
+        <FormGroup errorMessage={errors.title}>
           <label htmlFor="title">Title</label>
           <input
             type="text"
@@ -12,9 +19,8 @@ export function PostForm({ users, defaultValues = {} }) {
             id="title"
             defaultValue={defaultValues.title}
           />
-          <div className="error-message">Required</div>
         </FormGroup>
-        <FormGroup>
+        <FormGroup errorMessage={errors.userId}>
           <label htmlFor="userId">Author</label>
           <select name="userId" id="userId" defaultValue={defaultValues.userId}>
             {users.map((user) => (
@@ -27,15 +33,13 @@ export function PostForm({ users, defaultValues = {} }) {
       </div>
 
       <div className="form-row">
-        <FormGroup>
-          <div className="form-group">
-            <label htmlFor="body">Body</label>
-            <textarea
-              name="body"
-              id="body"
-              defaultValue={defaultValues.body}
-            ></textarea>
-          </div>
+        <FormGroup errorMessage={errors.body}>
+          <label htmlFor="body">Body</label>
+          <textarea
+            name="body"
+            id="body"
+            defaultValue={defaultValues.body}
+          ></textarea>
         </FormGroup>
       </div>
 
@@ -43,8 +47,22 @@ export function PostForm({ users, defaultValues = {} }) {
         <Link className="btn btn-outline" to="/posts">
           Cancel
         </Link>
-        <button className="btn">Save</button>
+        <button className="btn"> {isSubmitting ? "Saving" : "Save"}</button>
       </div>
     </Form>
   );
+}
+
+export function postFormValidator({ title, body, userId }) {
+  const errors = {};
+  if (title === "") {
+    errors.title = "Required";
+  }
+  if (body === "") {
+    errors.body = "Required";
+  }
+  if (userId === "") {
+    errors.userId = "Required";
+  }
+  return errors;
 }

@@ -3,6 +3,7 @@ import { useLoaderData, Link, Form, useResolvedPath } from "react-router-dom";
 
 import { getPosts } from "../api/posts";
 import { getUsers } from "../api/users";
+import { FormGroup } from "../components/FormGroup";
 
 function Posts() {
   const {
@@ -33,11 +34,11 @@ function Posts() {
         </h1>
         <Form className="form mb-4">
           <div className="form-row">
-            <div className="form-group">
+            <FormGroup>
               <label htmlFor="query">Query</label>
               <input type="search" name="query" id="query" ref={queryRef} />
-            </div>
-            <div className="form-group">
+            </FormGroup>
+            <FormGroup>
               <label htmlFor="userId">Author</label>
               <select type="search" name="userId" id="userId" ref={userIdRef}>
                 <option value="">Any</option>
@@ -47,7 +48,7 @@ function Posts() {
                   </option>
                 ))}
               </select>
-            </div>
+            </FormGroup>
             <button className="btn">Filter</button>
           </div>
         </Form>
@@ -67,7 +68,6 @@ function Posts() {
               </div>
             );
           })}
-          ;
         </div>
       </div>
     </>

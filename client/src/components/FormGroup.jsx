@@ -1,3 +1,10 @@
-export function FormGroup({ children }) {
-  return <div className="form-group">{children}</div>;
+export function FormGroup({ children, errorMessage }) {
+  return (
+    <div className="form-group">
+      {children}
+      {errorMessage != null && (
+        <div className="error-message">{errorMessage}</div>
+      )}
+    </div>
+  );
 }
